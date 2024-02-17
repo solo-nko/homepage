@@ -31,7 +31,7 @@
             "always"
         ],
         "no-unused-vars": "warn",
-        "typescript-eslint/no-unused-vars": "off"
-        // "eslint-plugin-vue/no-unused-components": "warn"
+        "typescript-eslint/no-unused-vars": "off",
+        "vue/no-unused-components": "warn"
     }
 }

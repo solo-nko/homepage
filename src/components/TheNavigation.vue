@@ -1,7 +1,7 @@
 <template>
 	<nav>
-		<NavButton>Home</NavButton>
-		<NavButton>Projects</NavButton>
+		<NavButton page="home">Home</NavButton>
+		<NavButton page="projects">Projects</NavButton>
 	</nav>
 </template>
 

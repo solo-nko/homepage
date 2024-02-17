@@ -1,11 +1,13 @@
 <template>
-	<button><slot>placeholder</slot></button>
+	<RouterLink class="button" :to="page"
+		><button><slot></slot></button
+	></RouterLink>
 </template>
 
 <script lang="ts">
 export default {
 	props: {
-		label: String,
+		page: String,
 	},
 };
 </script>
