@@ -1,6 +1,6 @@
 # homepage
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a homepage project made to practice Vue and SPA development.
 
 ## Recommended IDE Setup
 
@@ -38,3 +38,18 @@ npm run dev
 ```sh
 npm run build
 ```
+
+### Project Structure
+
+* assets - media and other static things like CSS sheets
+* components - Vue components
+  * common - small things meant to be reused multiple times
+  * singles - things that will only appear once
+* router - information for Vue Router
+* views - pages in the website
+
+### Tech Stack
+
+* Vue 3
+* Vue Router 4
+* TypeScript
