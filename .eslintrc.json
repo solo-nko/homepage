@@ -22,10 +22,6 @@
             "warn",
             "tab"
         ],
-        "linebreak-style": [
-            "warn",
-            "unix"
-        ],
         "quotes": [
             "warn",
             "double"
@@ -35,6 +31,7 @@
             "always"
         ],
         "no-unused-vars": "warn",
-        "eslint-plugin-vue/no-unused-components": "warn"
+        "typescript-eslint/no-unused-vars": "off"
+        // "eslint-plugin-vue/no-unused-components": "warn"
     }
 }
