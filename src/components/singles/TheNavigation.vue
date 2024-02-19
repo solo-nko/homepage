@@ -1,17 +1,20 @@
 <template>
 	<nav>
-		<NavButton page="home" page-label="Home">Home</NavButton>
-		<NavButton page="projects" page-label="Projects">Projects</NavButton>
-		<NavButton page="photos" page-label="Photos">Photos</NavButton>
+		<RouterLink :to="{ name: 'home' }"><base-button>Home</base-button></RouterLink>
+		<RouterLink :to="{ name: 'projects' }"><base-button>Projects</base-button></RouterLink>
+		<RouterLink :to="{ name: 'photos' }"><base-button>Photography</base-button></RouterLink>
 	</nav>
 </template>
 
 <script lang="ts">
-import NavButton from "../common/NavButton.vue";
-
-export default {
-	components: {
-		NavButton,
-	},
-};
+export default {};
 </script>
+
+<style scoped>
+
+nav {
+	padding: 1rem;
+	display: flex;
+	justify-content: center;
+}
+</style>
