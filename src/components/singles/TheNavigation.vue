@@ -1,8 +1,8 @@
 <template>
 	<nav>
-		<NavButton page="home">Home</NavButton>
-		<NavButton page="projects">Projects</NavButton>
-		<NavButton page="photos">Photos</NavButton>
+		<NavButton page="home" page-label="Home">Home</NavButton>
+		<NavButton page="projects" page-label="Projects">Projects</NavButton>
+		<NavButton page="photos" page-label="Photos">Photos</NavButton>
 	</nav>
 </template>
 
