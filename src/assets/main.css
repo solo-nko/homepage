@@ -1,14 +1,18 @@
 :root {
 	/* Color theme variables */
-	--backgroundColorDarkTheme: #1D4575;
-	--textColorDarkTheme: #FEFDFD;
-	--buttonColorDarkTheme: #337DD6;
+	--backgroundColorDarkTheme: #1d4575;
+	--textColorDarkTheme: #fefdfd;
+	--buttonColorDarkTheme: #337dd6;
 }
 
 * {
-	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+	font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 body {
 	margin: 0;
+}
+
+h1 {
+	text-align: center;
 }
