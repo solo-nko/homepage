@@ -1,10 +1,16 @@
 <template>
 	<div id="app-container">
-		<header><TheNavigation /></header>
-		<main id="router-view">
-			<RouterView />
-		</main>
-		<TheFooter />
+		<Teleport to="body">
+			<header><TheNavigation /></header>
+		</Teleport>
+		<Teleport to="body">
+			<main id="router-view">
+				<RouterView />
+			</main>
+		</Teleport>
+		<Teleport to="body">
+			<TheFooter />
+		</Teleport>
 	</div>
 </template>
 
@@ -21,15 +27,14 @@ export default {
 </script>
 
 <style>
-#app-container {
-	margin: 0 1rem;
+/* main {
 	display: flex;
 	flex-direction: column;
-	/* height: 100vh; */
-}
+	align-items: center;
+} */
 
-#router-view {
-	flex-grow: 1;
+body {
+	background-color: #d2e5ff;
 }
 
 td,

@@ -1,5 +1,5 @@
 <template>
-	<main id="grid-container">
+	<div id="grid-container">
 		<h1 class="grid-row theme-text">
 			Counter App
 		</h1>
@@ -47,7 +47,7 @@
 				>
 			</label>
 		</div>
-	</main>
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -85,6 +85,8 @@ function setCount(event: Event) {
 }
 
 #grid-container {
+	max-width: 800px;
+	margin: 0 auto;
 	display: grid;
 	grid-template-rows: 2fr 1fr 1fr 1fr;
 	grid-template-columns: 1fr 1fr 1fr;

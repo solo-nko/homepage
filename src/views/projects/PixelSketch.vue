@@ -21,7 +21,7 @@
 			</div>
 		</section>
 		<section id="sketch-sect">
-			<div id="sketch-area"></div>
+			<div id="sketch-area" :style="canvasStyle"></div>
 		</section>
 	</div>
 </template>
@@ -30,14 +30,19 @@
 import { ref } from "vue";
 
 let gridDimension = ref(5);
+let canvasStyle = ref(
+	`grid-template-rows: repeat(${gridDimension.value}, 1fr); grid-template-columns: repeat(${gridDimension.value}, 1fr);`
+);
 </script>
 
 <style scoped>
 #top-container {
 	display: grid;
-	grid-template-areas: 
-	"top top"
-	"opt area";
+	max-width: 800px;
+	margin: 0 auto;
+	grid-template-areas:
+		"top top"
+		"opt area";
 	gap: 1rem;
 	grid-template-columns: 1fr 3fr;
 	grid-template-rows: 1fr 3fr;
@@ -64,10 +69,21 @@ let gridDimension = ref(5);
 
 #sketch-sect {
 	grid-area: area;
-	padding: 1rem;
+	padding: 10px;
 	aspect-ratio: 1/1;
 	min-width: 250px;
 	min-height: 250px;
-	box-shadow: grey inset 0 0;
+	background-color: aliceblue;
+	box-shadow: grey inset 0 0 7px 0;
+}
+
+#sketch-area {
+	display: grid;
+	height: 100%;
+	height: 100%;
+}
+
+input {
+	width: 100%;
 }
 </style>
