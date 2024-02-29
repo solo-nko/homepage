@@ -7,7 +7,7 @@
 		<section id="option-sect">
 			<div>
 				<label for="btn-piece-color">Draw Color</label>
-				<input type="color" name="btn-piece-color" />
+				<input type="color" name="btn-piece-color" v-on:change="testColor($event)" />
 			</div>
 			<div>
 				<label for="btn-canvas-color">Canvas Color</label>
@@ -17,22 +17,55 @@
 			<base-button>Clear</base-button>
 			<div>
 				<label for="grid-scale">Size: {{ gridDimension }} x {{ gridDimension }}</label>
-				<input type="range" name="grid-scale" min="2" max="25" v-model="gridDimension" />
+				<input
+					type="range"
+					name="grid-scale"
+					min="2"
+					max="25"
+					v-model="gridDimension"
+					v-on:change="createGrid()"
+				/>
 			</div>
 		</section>
 		<section id="sketch-sect">
-			<div id="sketch-area" :style="canvasStyle"></div>
+			<div id="sketch-area" :style="canvasStyle">
+				<GridPiece v-for="piece in gridDimension * gridDimension" :color="drawColor" />
+			</div>
 		</section>
 	</div>
 </template>
 
 <script setup lang="ts">
+
+//the story so far
+/* - canvasStyle does not recieve an updated gridDimension value
+		- need a way to distinguish individual grid pieces
+ */
+
 import { ref } from "vue";
+import GridPiece from "@/components/common/GridPiece.vue";
 
 let gridDimension = ref(5);
 let canvasStyle = ref(
 	`grid-template-rows: repeat(${gridDimension.value}, 1fr); grid-template-columns: repeat(${gridDimension.value}, 1fr);`
 );
+
+let drawColor = ref('')
+
+const pieces = [];
+
+function createGrid() {
+	pieces.length = 0;
+	for (let i = 0; i < gridDimension.value * gridDimension.value; i++) {
+		pieces.push(GridPiece);
+	}
+}
+
+function testColor(event:Event) {
+	const color = (event.target as HTMLInputElement).value
+	console.log(color);
+	drawColor.value = color;
+}
 </script>
 
 <style scoped>
