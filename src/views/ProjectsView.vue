@@ -16,8 +16,9 @@
 				<td>Vue, TypeScript, HTML+CSS</td>
 			</tr>
 			<tr>
-				<td>PixelSketch</td>
-				<td>A basic drawing tool</td>
+				<td><RouterLink :to="{ name: 'pixelsketch'}">PixelSketch</RouterLink></td>
+				<td>A basic drawing tool.</td>
+				<td>Vue, TypeScript, HTML+CSS</td>
 			</tr>
 		</tbody>
 	</table>
