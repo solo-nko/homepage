@@ -6,7 +6,7 @@
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:vue/vue3-essential"
+        "plugin:vue/vue3-recommended"
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
@@ -31,7 +31,16 @@
             "always"
         ],
         "no-unused-vars": "warn",
-        "typescript-eslint/no-unused-vars": "off",
-        "vue/no-unused-components": "warn"
+        "@typescript-eslint/no-unused-vars": "off",
+        "vue/no-unused-components": "warn",
+        "vue/html-indent": ["warn", "tab"],
+        "vue/max-attributes-per-line": ["warn", {
+            "singleline": {
+                "max": 3
+            },
+            "multiline":{
+                "max": 1
+            }
+        }]
     }
 }

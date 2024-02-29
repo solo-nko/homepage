@@ -1,9 +1,17 @@
 <template>
 	<nav>
-		<RouterLink :to="{ name: 'home' }"><base-button>Home</base-button></RouterLink>
-		<RouterLink :to="{ name: 'about' }"><base-button>About Me</base-button></RouterLink>
-		<RouterLink :to="{ name: 'projects' }"><base-button>Projects</base-button></RouterLink>
-		<RouterLink :to="{ name: 'photos' }"><base-button>Photography</base-button></RouterLink>
+		<RouterLink :to="{ name: 'home' }">
+			<base-button>Home</base-button>
+		</RouterLink>
+		<RouterLink :to="{ name: 'about' }">
+			<base-button>About Me</base-button>
+		</RouterLink>
+		<RouterLink :to="{ name: 'projects' }">
+			<base-button>Projects</base-button>
+		</RouterLink>
+		<RouterLink :to="{ name: 'photos' }">
+			<base-button>Photography</base-button>
+		</RouterLink>
 	</nav>
 </template>
 
