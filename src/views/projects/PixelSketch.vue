@@ -7,62 +7,67 @@
 		<section id="option-sect">
 			<div>
 				<label for="btn-piece-color">Draw Color</label>
-				<input type="color" name="btn-piece-color" v-on:change="testColor($event)" />
+				<input type="color" name="btn-piece-color" v-on:change="changeColor($event)">
 			</div>
 			<div>
 				<label for="btn-canvas-color">Canvas Color</label>
-				<input type="color" name="btn-canvas-color" />
+				<input type="color" name="btn-canvas-color">
 			</div>
 			<base-button>Eraser</base-button>
 			<base-button>Clear</base-button>
 			<div>
 				<label for="grid-scale">Size: {{ gridDimension }} x {{ gridDimension }}</label>
-				<input
-					type="range"
-					name="grid-scale"
-					min="2"
-					max="25"
-					v-model="gridDimension"
-					v-on:change="createGrid()"
-				/>
+				<input v-model="gridDimension" type="range" name="grid-scale" min="2" max="25" v-on:change="createNewGrid">
 			</div>
 		</section>
 		<section id="sketch-sect">
-			<div id="sketch-area" :style="canvasStyle">
-				<GridPiece v-for="piece in gridDimension * gridDimension" :color="drawColor" />
+			<div id="sketch-area" v-bind:style="canvasStyle">
+				<!-- <GridPiece v-for="piece in gridPieces || []" v-bind:key="piece" v-bind:color="drawColor" /> -->
+				<div v-for="(piece, index) in gridPieces" v-bind:id="String(index)" v-bind:key="piece" class="grid-piece" v-on:mouseenter="fill($event)" v-on:mousedown="fill($event)" />
 			</div>
 		</section>
 	</div>
 </template>
 
 <script setup lang="ts">
-
 //the story so far
-/* - canvasStyle does not recieve an updated gridDimension value
-		- need a way to distinguish individual grid pieces
+/* - grid size doesn't update correctly. it only updates to the previous value, after setting a new one.
+   - need to be able to draw with default color
+	 - try using CSS v-bind and v-bind:id to refer to unique divs?
  */
 
-import { ref } from "vue";
-import GridPiece from "@/components/common/GridPiece.vue";
+import { computed, ref } from "vue";
+const gridDimension = ref(5);
 
-let gridDimension = ref(5);
-let canvasStyle = ref(
-	`grid-template-rows: repeat(${gridDimension.value}, 1fr); grid-template-columns: repeat(${gridDimension.value}, 1fr);`
-);
+const gridPieces: symbol[] = new Array(gridDimension.value * gridDimension.value);
 
-let drawColor = ref('')
+function fill(event: MouseEvent) {
+/* 	const selectedCell = event.target as HTMLElement;
+	selectedCell.style.backgroundColor = drawColor.value; */
 
-const pieces = [];
-
-function createGrid() {
-	pieces.length = 0;
-	for (let i = 0; i < gridDimension.value * gridDimension.value; i++) {
-		pieces.push(GridPiece);
+	if (event.buttons > 0) {
+		const selectedCell = event.target as HTMLElement;
+		selectedCell.style.backgroundColor = drawColor.value;
 	}
 }
 
-function testColor(event:Event) {
-	const color = (event.target as HTMLInputElement).value
+function createNewGrid() {
+	gridPieces.length = 0;
+	const totalSize = gridDimension.value * gridDimension.value;
+	for (let i = 0; i < totalSize; i++) {
+		gridPieces.push(Symbol(`symbol${i}`));
+	}
+}
+
+const canvasStyle = computed(() => {
+	return `grid-template-rows: repeat(${gridDimension.value}, 1fr); grid-template-columns: repeat(${gridDimension.value}, 1fr);`;
+});
+
+const defaultColor = "#0000";
+let drawColor = ref("");
+
+function changeColor(event: Event) {
+	const color = (event.target as HTMLInputElement).value;
 	console.log(color);
 	drawColor.value = color;
 }
