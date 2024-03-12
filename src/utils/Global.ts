@@ -1,5 +1,5 @@
-export class Global {
+export default class Global {
 	static defaultDim: number = 5;
-	static defaultBackground: string = "";
-	static defaultForeground: string = "";
+	static defaultBackground: string = "#000000";
+	static defaultForeground: string = "#1B4F7C";
 }
