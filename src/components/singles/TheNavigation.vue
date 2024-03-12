@@ -1,15 +1,15 @@
 <template>
 	<nav>
-		<RouterLink :to="{ name: 'home' }">
+		<RouterLink v-bind:to="{ name: 'home' }">
 			<base-button>Home</base-button>
 		</RouterLink>
-		<RouterLink :to="{ name: 'about' }">
+		<RouterLink v-bind:to="{ name: 'about' }">
 			<base-button>About Me</base-button>
 		</RouterLink>
-		<RouterLink :to="{ name: 'projects' }">
+		<RouterLink v-bind:to="{ name: 'projects' }">
 			<base-button>Projects</base-button>
 		</RouterLink>
-		<RouterLink :to="{ name: 'photos' }">
+		<RouterLink v-bind:to="{ name: 'photos' }">
 			<base-button>Photography</base-button>
 		</RouterLink>
 	</nav>

@@ -3,48 +3,16 @@
 		<h1 class="grid-row theme-text">
 			Counter App
 		</h1>
-		<div
-			id="counterResult"
-			class="grid-row theme-text"
-		>
-			{{ count }}
-		</div>
+		<div id="counterResult" class="grid-row theme-text">{{ count }}</div>
 
-		<base-button
-			id="incrButton"
-			class="theme-text"
-			@click="increaseCount()"
-		>
-			Increment
-		</base-button>
-		<base-button
-			id="decrButton"
-			class="theme-text"
-			@click="decreaseCount()"
-		>
-			Decrement
-		</base-button>
-		<base-button
-			id="resetButton"
-			class="theme-text"
-			@click="resetCount()"
-		>
-			Reset to 0
-		</base-button>
+		<base-button id="incrButton" class="theme-text" v-on:click="increaseCount()">Increment</base-button>
+		<base-button id="decrButton" class="theme-text" v-on:click="decreaseCount()">Decrement</base-button>
+		<base-button id="resetButton" class="theme-text" v-on:click="resetCount()">Reset to 0</base-button>
 
-		<div
-			id="skipDiv"
-			class="grid-row"
-		>
-			<label
-				for=""
-				class="theme-text"
-			>Skip to
-				<input
-					type="number"
-					inputmode="numeric"
-					@change="setCount($event)"
-				>
+		<div id="skipDiv" class="grid-row">
+			<label for="" class="theme-text">
+				Skip to
+				<input type="number" inputmode="numeric" v-on:change="setCount($event)">
 			</label>
 		</div>
 	</div>
@@ -135,6 +103,4 @@ button {
 	display: flex;
 	justify-content: center;
 }
-
-
 </style>
