@@ -7,7 +7,7 @@
 		<section id="option-sect">
 			<div>
 				<label for="btn-piece-color">Draw Color</label>
-				<input type="color" name="btn-piece-color" v-on:change="changeColor($event)">
+				<input type="color" name="btn-piece-color" v-bind:value="foregroundColor" v-on:change="changeForegroundColor($event)">
 			</div>
 			<div>
 				<label for="btn-canvas-color">Canvas Color</label>
@@ -17,45 +17,50 @@
 			<base-button>Clear</base-button>
 			<div>
 				<label for="grid-scale">Size: {{ gridDimension }} x {{ gridDimension }}</label>
-				<input v-model="gridDimension" type="range" name="grid-scale" min="2" max="25" v-on:change="createNewGrid">
+				<input v-model.lazy="gridDimension" type="range" name="grid-scale" min="2" max="25">
 			</div>
 		</section>
 		<section id="sketch-sect">
 			<div id="sketch-area" v-bind:style="canvasStyle">
-				<!-- <GridPiece v-for="piece in gridPieces || []" v-bind:key="piece" v-bind:color="drawColor" /> -->
-				<div v-for="(piece, index) in gridPieces" v-bind:id="String(index)" v-bind:key="piece" class="grid-piece" v-on:mouseenter="fill($event)" v-on:mousedown="fill($event)" />
+				<GridPiece v-for="piece in gridPieces" v-bind:key="piece.id" v-bind:foreground-color="piece.foregroundColor"
+					v-bind:background-color="piece.backgroundColor" v-on:piece-click="fillPiece(piece)" />
 			</div>
 		</section>
 	</div>
 </template>
 
 <script setup lang="ts">
+
 //the story so far
-/* - grid size doesn't update correctly. it only updates to the previous value, after setting a new one.
-   - need to be able to draw with default color
-	 - try using CSS v-bind and v-bind:id to refer to unique divs?
+/* - GridPieces dont update when clicked, i think because their prop isn't actually being changed by fillPiece().
  */
 
-import { computed, ref } from "vue";
+import { computed, onBeforeMount, ref, watch } from "vue";
+import GridPiece from "@/components/common/GridPiece.vue";
+import type { GridCell } from "@/utils/GridCell";
+import Global from "@/utils/Global";
+
 const gridDimension = ref(5);
 
-const gridPieces: symbol[] = new Array(gridDimension.value * gridDimension.value);
+const gridPieces: GridCell[] = new Array(gridDimension.value * gridDimension.value);
 
-function fill(event: MouseEvent) {
-/* 	const selectedCell = event.target as HTMLElement;
-	selectedCell.style.backgroundColor = drawColor.value; */
+const numOfPieces = computed(() => {
+	return gridDimension.value * gridDimension.value;
+});
 
-	if (event.buttons > 0) {
-		const selectedCell = event.target as HTMLElement;
-		selectedCell.style.backgroundColor = drawColor.value;
-	}
-}
+watch(numOfPieces, () => createNewGrid());
+
+onBeforeMount(() => createNewGrid());
 
 function createNewGrid() {
 	gridPieces.length = 0;
-	const totalSize = gridDimension.value * gridDimension.value;
-	for (let i = 0; i < totalSize; i++) {
-		gridPieces.push(Symbol(`symbol${i}`));
+	for (let i = 0; i < numOfPieces.value; i++) {
+		gridPieces.push({
+			id: i,
+			foregroundColor: "",
+			backgroundColor: "",
+			active: false
+		});
 	}
 }
 
@@ -63,13 +68,17 @@ const canvasStyle = computed(() => {
 	return `grid-template-rows: repeat(${gridDimension.value}, 1fr); grid-template-columns: repeat(${gridDimension.value}, 1fr);`;
 });
 
-const defaultColor = "#0000";
-let drawColor = ref("");
+const foregroundColor = ref(Global.defaultForeground);
+const backgroundColor = ref("");
 
-function changeColor(event: Event) {
-	const color = (event.target as HTMLInputElement).value;
-	console.log(color);
-	drawColor.value = color;
+function changeForegroundColor(event: Event) {
+	const colorHandler = event.target as HTMLInputElement;
+	foregroundColor.value = colorHandler.value;
+}
+
+function fillPiece(piece: GridCell) {
+	piece.foregroundColor = foregroundColor.value;
+	console.log(piece);	
 }
 </script>
 
