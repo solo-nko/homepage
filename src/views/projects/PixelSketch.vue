@@ -76,12 +76,8 @@ function toggleEraser() {
 	eraserActive = !eraserActive;
 }
 
-function changeForegroundColor(event: Event) {
-	const colorHandler = event.target as HTMLInputElement;
-	foregroundColor.value = colorHandler.value;
-}
-
 function fillPiece(event: Event, clicking: boolean) {
+	//eraser
 	if (eraserActive) {
 		//click functionality
 		if (clicking) {
@@ -95,6 +91,7 @@ function fillPiece(event: Event, clicking: boolean) {
 				targetPiece.style.backgroundColor = backgroundColor.value;
 			}
 		}
+		//drawing
 	} else {
 		//click functionality
 		if (clicking) {
@@ -165,4 +162,4 @@ function fillPiece(event: Event, clicking: boolean) {
 input {
 	width: 100%;
 }
-</style>@/utils/Global
+</style>
