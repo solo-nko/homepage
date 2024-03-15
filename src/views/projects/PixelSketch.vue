@@ -11,9 +11,9 @@
 			</div>
 			<div>
 				<label for="btn-canvas-color">Canvas Color</label>
-				<input type="color" name="btn-canvas-color">
+				<input v-model="backgroundColor" type="color" name="btn-canvas-color">
 			</div>
-			<base-button>Eraser</base-button>
+			<base-button v-on:click="toggleEraser">Eraser</base-button>
 			<base-button>Clear</base-button>
 			<div>
 				<label for="grid-scale">Size: {{ gridDimension }} x {{ gridDimension }}</label>
@@ -22,7 +22,7 @@
 		</section>
 		<section id="sketch-sect">
 			<div id="sketch-area" v-bind:style="canvasStyle">
-				<GridPiece v-for="piece in gridPieces" v-bind:key="piece.id" v-on:mousedown="fillPiece($event, true)"
+				<GridPiece v-for="piece in gridPieces" v-bind:key="piece.id" v-on:mousedown.prevent="fillPiece($event, true)"
 					v-on:mouseenter.prevent="fillPiece($event, false)" />
 			</div>
 		</section>
@@ -32,16 +32,21 @@
 <script setup lang="ts">
 
 //the story so far
+// eraser "works", but there's no visual cues
+// next up is setting up the clear button, canvas color and syncing eraser to it
+
 import { computed, onBeforeMount, ref, watch } from "vue";
 import GridPiece from "@/components/common/GridPiece.vue";
 import type { GridCell } from "@/utils/GridCell";
-import Global from "@/utils/Global";
+import PixelSketchConfig from "@/utils/Global";
 
 const gridDimension = ref(5);
 const gridPieces: GridCell[] = new Array(gridDimension.value * gridDimension.value);
 const numOfPieces = computed(() => {
 	return gridDimension.value * gridDimension.value;
 });
+
+let eraserActive:boolean = false;
 
 //when num of pieces changes, create a new grid
 watch(numOfPieces, () => createNewGrid());
@@ -64,8 +69,12 @@ const canvasStyle = computed(() => {
 	return `grid-template-rows: repeat(${gridDimension.value}, 1fr); grid-template-columns: repeat(${gridDimension.value}, 1fr);`;
 });
 
-const foregroundColor = ref(Global.defaultForeground);
-const backgroundColor = ref("");
+const foregroundColor = ref(PixelSketchConfig.defaultForeground);
+const backgroundColor = ref(PixelSketchConfig.defaultBackground);
+
+function toggleEraser() {
+	eraserActive = !eraserActive;
+}
 
 function changeForegroundColor(event: Event) {
 	const colorHandler = event.target as HTMLInputElement;
@@ -73,18 +82,34 @@ function changeForegroundColor(event: Event) {
 }
 
 function fillPiece(event: Event, clicking: boolean) {
-	//click functionality
-	if (clicking) {
-		const targetPiece = event.target as HTMLElement;
-		targetPiece.style.backgroundColor = foregroundColor.value;
-	} else {
+	if (eraserActive) {
+		//click functionality
+		if (clicking) {
+			const targetPiece = event.target as HTMLElement;
+			targetPiece.style.backgroundColor = backgroundColor.value;
+		} else {
 		//dragging functionality
-		const mouseEvent = event as MouseEvent;
-		if (mouseEvent.buttons > 0) {
-			const targetPiece = mouseEvent.target as HTMLElement;
+			const mouseEvent = event as MouseEvent;
+			if (mouseEvent.buttons > 0) {
+				const targetPiece = mouseEvent.target as HTMLElement;
+				targetPiece.style.backgroundColor = backgroundColor.value;
+			}
+		}
+	} else {
+		//click functionality
+		if (clicking) {
+			const targetPiece = event.target as HTMLElement;
 			targetPiece.style.backgroundColor = foregroundColor.value;
+		} else {
+		//dragging functionality
+			const mouseEvent = event as MouseEvent;
+			if (mouseEvent.buttons > 0) {
+				const targetPiece = mouseEvent.target as HTMLElement;
+				targetPiece.style.backgroundColor = foregroundColor.value;
+			}
 		}
 	}
+
 
 }
 </script>
@@ -140,4 +165,4 @@ function fillPiece(event: Event, clicking: boolean) {
 input {
 	width: 100%;
 }
-</style>
+</style>@/utils/Global
