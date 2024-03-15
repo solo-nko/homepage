@@ -1,11 +1,9 @@
 <template>
-	<div id="piece-body" v-on:click="$emit('pieceClick')" />
+	<div id="piece-body" />
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
 
-defineEmits(["pieceClick"]);
 const props = defineProps({
 	foregroundColor: {
 		type: String,
@@ -16,10 +14,6 @@ const props = defineProps({
 		default: ""
 	}
 });
-
-const computedStyle = computed(() => {
-	return `background-color: ${props.foregroundColor}`;
-})
 
 </script>
 

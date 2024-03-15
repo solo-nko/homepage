@@ -7,7 +7,7 @@
 		<section id="option-sect">
 			<div>
 				<label for="btn-piece-color">Draw Color</label>
-				<input type="color" name="btn-piece-color" v-bind:value="foregroundColor" v-on:change="changeForegroundColor($event)">
+				<input v-model="foregroundColor" type="color" name="btn-piece-color">
 			</div>
 			<div>
 				<label for="btn-canvas-color">Canvas Color</label>
@@ -22,8 +22,8 @@
 		</section>
 		<section id="sketch-sect">
 			<div id="sketch-area" v-bind:style="canvasStyle">
-				<GridPiece v-for="piece in gridPieces" v-bind:key="piece.id" v-bind:foreground-color="piece.foregroundColor"
-					v-bind:background-color="piece.backgroundColor" v-on:piece-click="fillPiece(piece)" />
+				<GridPiece v-for="piece in gridPieces" v-bind:key="piece.id" v-on:mousedown="fillPiece($event, true)"
+					v-on:mouseenter.prevent="fillPiece($event, false)" />
 			</div>
 		</section>
 	</div>
@@ -32,22 +32,18 @@
 <script setup lang="ts">
 
 //the story so far
-/* - GridPieces dont update when clicked, i think because their prop isn't actually being changed by fillPiece().
- */
-
 import { computed, onBeforeMount, ref, watch } from "vue";
 import GridPiece from "@/components/common/GridPiece.vue";
 import type { GridCell } from "@/utils/GridCell";
 import Global from "@/utils/Global";
 
 const gridDimension = ref(5);
-
 const gridPieces: GridCell[] = new Array(gridDimension.value * gridDimension.value);
-
 const numOfPieces = computed(() => {
 	return gridDimension.value * gridDimension.value;
 });
 
+//when num of pieces changes, create a new grid
 watch(numOfPieces, () => createNewGrid());
 
 onBeforeMount(() => createNewGrid());
@@ -76,9 +72,20 @@ function changeForegroundColor(event: Event) {
 	foregroundColor.value = colorHandler.value;
 }
 
-function fillPiece(piece: GridCell) {
-	piece.foregroundColor = foregroundColor.value;
-	console.log(piece);	
+function fillPiece(event: Event, clicking: boolean) {
+	//click functionality
+	if (clicking) {
+		const targetPiece = event.target as HTMLElement;
+		targetPiece.style.backgroundColor = foregroundColor.value;
+	} else {
+		//dragging functionality
+		const mouseEvent = event as MouseEvent;
+		if (mouseEvent.buttons > 0) {
+			const targetPiece = mouseEvent.target as HTMLElement;
+			targetPiece.style.backgroundColor = foregroundColor.value;
+		}
+	}
+
 }
 </script>
 
