@@ -4,14 +4,14 @@
 
 <script setup lang="ts">
 
-const props = defineProps({
-	foregroundColor: {
+defineProps({
+	fillColor: {
 		type: String,
 		default: ""
 	},
-	backgroundColor: {
-		type: String,
-		default: ""
+	active: {
+		type: Boolean,
+		default: false
 	}
 });
 
@@ -21,7 +21,7 @@ const props = defineProps({
 #piece-body {
 	width: 100%;
 	height: 100%;
-	background-color: v-bind(foregroundColor);
+	background-color: v-bind(fillColor);
 	border: 0.5px dashed gray;
 	box-sizing: border-box;
 }
