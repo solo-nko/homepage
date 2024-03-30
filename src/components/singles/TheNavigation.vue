@@ -1,13 +1,22 @@
 <template>
 	<nav>
-		<RouterLink :to="{ name: 'home' }"><base-button>Home</base-button></RouterLink>
-		<RouterLink :to="{ name: 'about' }"><base-button>About Me</base-button></RouterLink>
-		<RouterLink :to="{ name: 'projects' }"><base-button>Projects</base-button></RouterLink>
-		<RouterLink :to="{ name: 'photos' }"><base-button>Photography</base-button></RouterLink>
+		<RouterLink v-bind:to="{ name: 'home' }">
+			<BaseButton>Home</BaseButton>
+		</RouterLink>
+		<RouterLink v-bind:to="{ name: 'about' }">
+			<BaseButton>About Me</BaseButton>
+		</RouterLink>
+		<RouterLink v-bind:to="{ name: 'projects' }">
+			<BaseButton>Projects</BaseButton>
+		</RouterLink>
+		<RouterLink v-bind:to="{ name: 'photos' }">
+			<BaseButton>Photography</BaseButton>
+		</RouterLink>
 	</nav>
 </template>
 
 <script lang="ts">
+
 export default {};
 </script>
 

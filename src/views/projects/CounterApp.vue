@@ -1,22 +1,25 @@
 <template>
-	<main id="grid-container">
-		<h1 class="grid-row theme-text">Counter App</h1>
+	<div id="grid-container">
+		<h1 class="grid-row theme-text">
+			Counter App
+		</h1>
 		<div id="counterResult" class="grid-row theme-text">{{ count }}</div>
 
-		<base-button id="incrButton" class="theme-text" v-on:click="increaseCount()">Increment</base-button>
-		<base-button id="decrButton" class="theme-text" v-on:click="decreaseCount()">Decrement</base-button>
-		<base-button id="resetButton" class="theme-text" v-on:click="resetCount()">Reset to 0</base-button>
+		<BaseButton id="incrButton" class="theme-text" v-on:click="increaseCount()">Increment</BaseButton>
+		<BaseButton id="decrButton" class="theme-text" v-on:click="decreaseCount()">Decrement</BaseButton>
+		<BaseButton id="resetButton" class="theme-text" v-on:click="resetCount()">Reset to 0</BaseButton>
 
 		<div id="skipDiv" class="grid-row">
-			<label for="" class="theme-text"
-				>Skip to
-				<input type="number" inputmode="numeric" v-on:change="setCount($event)" />
+			<label for="" class="theme-text">
+				Skip to
+				<input type="number" inputmode="numeric" v-on:change="setCount($event)">
 			</label>
 		</div>
-	</main>
+	</div>
 </template>
 
 <script setup lang="ts">
+import BaseButton from "@/components/common/BaseButton.vue";
 import { ref } from "vue";
 
 let count = ref(0);
@@ -51,6 +54,8 @@ function setCount(event: Event) {
 }
 
 #grid-container {
+	max-width: 800px;
+	margin: 0 auto;
 	display: grid;
 	grid-template-rows: 2fr 1fr 1fr 1fr;
 	grid-template-columns: 1fr 1fr 1fr;
@@ -99,6 +104,4 @@ button {
 	display: flex;
 	justify-content: center;
 }
-
-
 </style>

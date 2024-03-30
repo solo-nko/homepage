@@ -5,6 +5,7 @@ import HomeView from "@/views/HomeView.vue";
 import ProjectsView from "@/views/ProjectsView.vue";
 import PhotosView from "@/views/PhotosView.vue";
 import CounterApp from "@/views/projects/CounterApp.vue";
+import PixelSketch from "@/views/projects/PixelSketch.vue";
 import AboutView from "@/views/AboutView.vue";
 
 const router = createRouter({
@@ -30,6 +31,11 @@ const router = createRouter({
 			path: "/projects/counter",
 			name: "counterApp",
 			component: CounterApp,
+		},
+		{
+			path: "/projects/pixelsketch",
+			name: "pixelsketch",
+			component: PixelSketch
 		},
 		{
 			path: "/photos",
