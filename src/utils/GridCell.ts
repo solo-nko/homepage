@@ -1,5 +1,5 @@
 export interface GridCell {
-	id: number
+	id: symbol
 	fillColor: string
 	active: boolean
 }

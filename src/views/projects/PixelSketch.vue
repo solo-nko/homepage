@@ -11,10 +11,11 @@
 			</div>
 			<div>
 				<label for="btn-canvas-color">Canvas Color</label>
-				<input v-model="backgroundColor" type="color" name="btn-canvas-color">
+				<input v-model="backgroundColor" v-on:change="createNewGrid(true)" type="color" name="btn-canvas-color">
 			</div>
 			<base-button v-on:click="toggleEraser">Eraser</base-button>
-			<base-button v-on:click="createNewGrid">Clear</base-button>
+			<base-button v-on:click="createNewGrid()">Clear</base-button>
+			<base-button v-on:click="resetToDefault">Reset to default</base-button>
 			<div>
 				<label for="grid-scale">Size: {{ gridDimension }} x {{ gridDimension }}</label>
 				<input v-model.lazy="gridDimension" type="range" name="grid-scale" min="2" max="25">
@@ -23,8 +24,8 @@
 		<section id="sketch-sect">
 			<div id="sketch-area" v-bind:style="canvasStyle">
 				<GridPiece v-for="piece in gridPieces" v-bind:key="piece.id" v-bind:fill-color="piece.fillColor"
-					v-bind:active="piece.active" v-on:mousedown.prevent="fillPiece($event, true)"
-					v-on:mouseenter.prevent="fillPiece($event, false)" />
+					v-bind:active="piece.active" v-on:mousedown.prevent="fillPiece($event, true, piece)"
+					v-on:mouseenter.prevent="fillPiece($event, false, piece)" />
 			</div>
 		</section>
 	</div>
@@ -41,37 +42,62 @@ import GridPiece from "@/components/common/GridPiece.vue";
 import type { GridCell } from "@/utils/GridCell";
 import PixelSketchConfig from "@/utils/Global";
 
-const gridDimension = ref(5);
-const gridPieces: GridCell[] = new Array(gridDimension.value * gridDimension.value);
+const gridDimension = ref(PixelSketchConfig.defaultDim);
 const numOfPieces = computed(() => gridDimension.value * gridDimension.value);
-
+const gridPieces = ref(new Array(numOfPieces.value));
+const foregroundColor = ref(PixelSketchConfig.defaultForeground);
+const backgroundColor = ref(PixelSketchConfig.defaultBackground);
 let eraserActive: boolean = false;
 
-//when num of pieces changes, create a new grid
+//when number of gridpieces changes, create a new grid
 watch(numOfPieces, () => createNewGrid());
+
+// this makes is to the background color actively changes as you mess around with the slider. that's not a bad thing, but i preferred to have the color apply when the color box is closed
+// watch(backgroundColor, () => createNewGrid(true));
 
 onBeforeMount(() => createNewGrid());
 
-function createNewGrid() {
-	gridPieces.length = 0;
-	for (let i = 0; i < numOfPieces.value; i++) {
-		gridPieces.push({
-			id: i,
-			fillColor: backgroundColor.value,
-			active: false
+/**
+ * Resets the grid by emptying the gridPieces array and pushing new squares in with default values.
+ * @param partial For when we only want to reset the squares that haven't been "drawn" on, thereby only partially resetting the grid. In this case, the function does not actually empty the array but instead checks each square to see if it's been drawn on, and leaves it alone if so. 
+ */
+function createNewGrid(partial: boolean = false) {
+	if (partial) {
+		gridPieces.value.forEach(piece => {
+			if (!piece.active) {
+				piece.fillColor = backgroundColor.value;
+				piece.active = false;
+			}
 		});
 	}
+	else {
+		gridPieces.value.length = 0;
+		for (let i = 0; i < numOfPieces.value; i++) {
+			gridPieces.value.push({
+				id: Symbol(i),
+				fillColor: backgroundColor.value,
+				active: false
+			});
+		}
+	}
+
 }
 
 const canvasStyle = computed(() => {
 	return `grid-template-rows: repeat(${gridDimension.value}, 1fr); grid-template-columns: repeat(${gridDimension.value}, 1fr);`;
 });
 
-const foregroundColor = ref(PixelSketchConfig.defaultForeground);
-const backgroundColor = ref(PixelSketchConfig.defaultBackground);
+
 
 function toggleEraser() {
 	eraserActive = !eraserActive;
+}
+
+function resetToDefault() {
+	foregroundColor.value = PixelSketchConfig.defaultForeground;
+	backgroundColor.value = PixelSketchConfig.defaultBackground;
+	gridDimension.value = PixelSketchConfig.defaultDim;
+	createNewGrid();
 }
 
 /**
@@ -79,33 +105,43 @@ function toggleEraser() {
  * @param event the event fired by clicking
  * @param clicking whether the mouse button is being clicked once or held down
  */
-function fillPiece(event: Event, clicking: boolean) {
+function fillPiece(event: Event, clicking: boolean, piece: GridCell) {
 	//eraser
 	if (eraserActive) {
 		//click functionality
 		if (clicking) {
-			const targetPiece = event.target as HTMLElement;
-			targetPiece.style.backgroundColor = backgroundColor.value;
+			//const targetPiece = event.target as HTMLElement;
+			//targetPiece.style.backgroundColor = backgroundColor.value;
+			piece.active = false;
+			piece.fillColor = backgroundColor.value;
 		} else {
 			//dragging functionality
 			const mouseEvent = event as MouseEvent;
 			if (mouseEvent.buttons > 0) {
-				const targetPiece = mouseEvent.target as HTMLElement;
-				targetPiece.style.backgroundColor = backgroundColor.value;
+				// const targetPiece = mouseEvent.target as HTMLElement;
+				// targetPiece.style.backgroundColor = backgroundColor.value;
+				piece.active = false;
+				piece.fillColor = backgroundColor.value
 			}
 		}
 		//drawing
 	} else {
 		//click functionality
 		if (clicking) {
-			const targetPiece = event.target as HTMLElement;
-			targetPiece.style.backgroundColor = foregroundColor.value;
+			// this updates the object in the array but not the component. the component doesn't rerender until one of its prop values are changed
+			// piece.id = Symbol();
+			piece.active = true;
+			piece.fillColor = foregroundColor.value;
+			// const targetPiece = event.target as HTMLElement;
+			// targetPiece.style.backgroundColor = foregroundColor.value;
 		} else {
 			//dragging functionality
 			const mouseEvent = event as MouseEvent;
 			if (mouseEvent.buttons > 0) {
-				const targetPiece = mouseEvent.target as HTMLElement;
-				targetPiece.style.backgroundColor = foregroundColor.value;
+				// const targetPiece = mouseEvent.target as HTMLElement;
+				// targetPiece.style.backgroundColor = foregroundColor.value;
+				piece.active = true;
+				piece.fillColor = foregroundColor.value;
 			}
 		}
 	}
