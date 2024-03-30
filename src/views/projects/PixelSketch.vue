@@ -13,7 +13,7 @@
 				<label for="btn-canvas-color">Canvas Color</label>
 				<input v-model="backgroundColor" type="color" name="btn-canvas-color" v-on:change="createNewGrid(true)">
 			</div>
-			<BaseButton v-on:click="toggleEraser">Eraser</BaseButton>
+			<BaseButton v-bind:fill-color="eraserButtonFillColor" v-on:click="toggleEraser">Eraser</BaseButton>
 			<BaseButton v-on:click="createNewGrid()">Clear</BaseButton>
 			<BaseButton v-on:click="resetToDefault">Reset to default</BaseButton>
 			<div>
@@ -49,6 +49,7 @@ const numOfPieces = computed(() => gridDimension.value * gridDimension.value);
 const gridPieces = ref(new Array(numOfPieces.value));
 const foregroundColor = ref(PixelSketchConfig.defaultForeground);
 const backgroundColor = ref(PixelSketchConfig.defaultBackground);
+const eraserButtonFillColor = ref("#cddbfe");
 let eraserActive: boolean = false;
 
 //when number of gridpieces changes, create a new grid
@@ -91,6 +92,8 @@ const canvasStyle = computed(() => {
 
 function toggleEraser() {
 	eraserActive = !eraserActive;
+	if (!eraserActive) eraserButtonFillColor.value = "#cddbfe";
+	else eraserButtonFillColor.value = "#F5B6B2";
 }
 
 function resetToDefault() {
