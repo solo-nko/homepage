@@ -11,11 +11,11 @@
 			</div>
 			<div>
 				<label for="btn-canvas-color">Canvas Color</label>
-				<input v-model="backgroundColor" v-on:change="createNewGrid(true)" type="color" name="btn-canvas-color">
+				<input v-model="backgroundColor" type="color" name="btn-canvas-color" v-on:change="createNewGrid(true)">
 			</div>
-			<base-button v-on:click="toggleEraser">Eraser</base-button>
-			<base-button v-on:click="createNewGrid()">Clear</base-button>
-			<base-button v-on:click="resetToDefault">Reset to default</base-button>
+			<BaseButton v-on:click="toggleEraser">Eraser</BaseButton>
+			<BaseButton v-on:click="createNewGrid()">Clear</BaseButton>
+			<BaseButton v-on:click="resetToDefault">Reset to default</BaseButton>
 			<div>
 				<label for="grid-scale">Size: {{ gridDimension }} x {{ gridDimension }}</label>
 				<input v-model.lazy="gridDimension" type="range" name="grid-scale" min="2" max="25">
@@ -23,7 +23,8 @@
 		</section>
 		<section id="sketch-sect">
 			<div id="sketch-area" v-bind:style="canvasStyle">
-				<GridPiece v-for="piece in gridPieces" v-bind:key="piece.id" v-bind:fill-color="piece.fillColor"
+				<GridPiece
+					v-for="piece in gridPieces" v-bind:key="piece.id" v-bind:fill-color="piece.fillColor"
 					v-bind:active="piece.active" v-on:mousedown.prevent="fillPiece($event, true, piece)"
 					v-on:mouseenter.prevent="fillPiece($event, false, piece)" />
 			</div>
@@ -41,6 +42,7 @@ import { computed, onBeforeMount, ref, watch } from "vue";
 import GridPiece from "@/components/common/GridPiece.vue";
 import type { GridCell } from "@/utils/GridCell";
 import PixelSketchConfig from "@/utils/Global";
+import BaseButton from "@/components/common/BaseButton.vue";
 
 const gridDimension = ref(PixelSketchConfig.defaultDim);
 const numOfPieces = computed(() => gridDimension.value * gridDimension.value);
@@ -87,8 +89,6 @@ const canvasStyle = computed(() => {
 	return `grid-template-rows: repeat(${gridDimension.value}, 1fr); grid-template-columns: repeat(${gridDimension.value}, 1fr);`;
 });
 
-
-
 function toggleEraser() {
 	eraserActive = !eraserActive;
 }
@@ -121,7 +121,7 @@ function fillPiece(event: Event, clicking: boolean, piece: GridCell) {
 				// const targetPiece = mouseEvent.target as HTMLElement;
 				// targetPiece.style.backgroundColor = backgroundColor.value;
 				piece.active = false;
-				piece.fillColor = backgroundColor.value
+				piece.fillColor = backgroundColor.value;
 			}
 		}
 		//drawing
