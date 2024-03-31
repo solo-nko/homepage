@@ -3,18 +3,16 @@
 </template>
 
 <script setup lang="ts">
-
 defineProps({
 	fillColor: {
 		type: String,
-		default: ""
+		default: "",
 	},
 	active: {
 		type: Boolean,
-		default: false
-	}
+		default: false,
+	},
 });
-
 </script>
 
 <style scoped>

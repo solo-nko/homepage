@@ -1,41 +1,29 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true
-    },
-    "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:vue/vue3-recommended",
-        "prettier"
-    ],
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "parser": "@typescript-eslint/parser",
-        "sourceType": "module"
-    },
-    "plugins": [
-        "@typescript-eslint",
-        "vue"
-    ],
-    "rules": {
-        "indent": [
-            "warn",
-            "tab"
-        ],
-        "quotes": [
-            "warn",
-            "double"
-        ],
-        "semi": [
-            "warn",
-            "always"
-        ],
-        "no-unused-vars": "warn",
-        "@typescript-eslint/no-unused-vars": "off",
-        "vue/no-unused-components": "warn",
-        "vue/html-indent": ["warn", "tab"],
-        "vue/v-on-style": ["warn", "longform"],
-        "vue/v-bind-style": ["warn", "longform"]
-    }
+	"env": {
+		"browser": true,
+		"es2021": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:vue/vue3-recommended",
+		"prettier"
+	],
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"parser": "@typescript-eslint/parser",
+		"sourceType": "module"
+	},
+	"plugins": ["@typescript-eslint", "vue"],
+	"rules": {
+		"indent": ["warn", "tab"],
+		"quotes": ["warn", "double"],
+		"semi": ["warn", "always"],
+		"no-unused-vars": "warn",
+		"@typescript-eslint/no-unused-vars": "off",
+		"vue/no-unused-components": "warn",
+		"vue/html-indent": ["warn", "tab"],
+		"vue/v-on-style": ["warn", "longform"],
+		"vue/v-bind-style": ["warn", "longform"]
+	}
 }

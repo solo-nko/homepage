@@ -2,38 +2,60 @@
 	<div id="top-container">
 		<section id="intro-sect">
 			<h1>Pixel Canvas</h1>
-			<p>Click somewhere in the area below to start sketching your masterpiece!</p>
+			<p>
+				Click somewhere in the area below to start sketching your masterpiece!
+			</p>
 		</section>
 		<section id="option-sect">
 			<div>
 				<label for="btn-piece-color">Draw Color</label>
-				<input v-model="foregroundColor" type="color" name="btn-piece-color">
+				<input v-model="foregroundColor" type="color" name="btn-piece-color" />
 			</div>
 			<div>
 				<label for="btn-canvas-color">Canvas Color</label>
-				<input v-model="backgroundColor" type="color" name="btn-canvas-color" v-on:change="createNewGrid(true)">
+				<input
+					v-model="backgroundColor"
+					type="color"
+					name="btn-canvas-color"
+					v-on:change="createNewGrid(true)"
+				/>
 			</div>
-			<BaseButton v-bind:fill-color="eraserButtonFillColor" v-on:click="toggleEraser">Eraser</BaseButton>
+			<BaseButton
+				v-bind:fill-color="eraserButtonFillColor"
+				v-on:click="toggleEraser"
+				>Eraser</BaseButton
+			>
 			<BaseButton v-on:click="createNewGrid()">Clear</BaseButton>
 			<BaseButton v-on:click="resetToDefault">Reset to default</BaseButton>
 			<div>
-				<label for="grid-scale">Size: {{ gridDimension }} x {{ gridDimension }}</label>
-				<input v-model.lazy="gridDimension" type="range" name="grid-scale" min="2" max="25">
+				<label for="grid-scale"
+					>Size: {{ gridDimension }} x {{ gridDimension }}</label
+				>
+				<input
+					v-model.lazy="gridDimension"
+					type="range"
+					name="grid-scale"
+					min="2"
+					max="25"
+				/>
 			</div>
 		</section>
 		<section id="sketch-sect">
 			<div id="sketch-area" v-bind:style="canvasStyle">
 				<GridPiece
-					v-for="piece in gridPieces" v-bind:key="piece.id" v-bind:fill-color="piece.fillColor"
-					v-bind:active="piece.active" v-on:mousedown.prevent="fillPiece($event, true, piece)"
-					v-on:mouseenter.prevent="fillPiece($event, false, piece)" />
+					v-for="piece in gridPieces"
+					v-bind:key="piece.id"
+					v-bind:fill-color="piece.fillColor"
+					v-bind:active="piece.active"
+					v-on:mousedown.prevent="fillPiece($event, true, piece)"
+					v-on:mouseenter.prevent="fillPiece($event, false, piece)"
+				/>
 			</div>
 		</section>
 	</div>
 </template>
 
 <script setup lang="ts">
-
 //the story so far
 // eraser "works", but there's no visual cues
 // next up is setting up the clear button, canvas color and syncing eraser to it
@@ -62,28 +84,26 @@ onBeforeMount(() => createNewGrid());
 
 /**
  * Resets the grid by emptying the gridPieces array and pushing new squares in with default values.
- * @param partial For when we only want to reset the squares that haven't been "drawn" on, thereby only partially resetting the grid. In this case, the function does not actually empty the array but instead checks each square to see if it's been drawn on, and leaves it alone if so. 
+ * @param partial For when we only want to reset the squares that haven't been "drawn" on, thereby only partially resetting the grid. In this case, the function does not actually empty the array but instead checks each square to see if it's been drawn on, and leaves it alone if so.
  */
 function createNewGrid(partial: boolean = false) {
 	if (partial) {
-		gridPieces.value.forEach(piece => {
+		gridPieces.value.forEach((piece) => {
 			if (!piece.active) {
 				piece.fillColor = backgroundColor.value;
 				piece.active = false;
 			}
 		});
-	}
-	else {
+	} else {
 		gridPieces.value.length = 0;
 		for (let i = 0; i < numOfPieces.value; i++) {
 			gridPieces.value.push({
 				id: Symbol(i),
 				fillColor: backgroundColor.value,
-				active: false
+				active: false,
 			});
 		}
 	}
-
 }
 
 const canvasStyle = computed(() => {
@@ -148,8 +168,6 @@ function fillPiece(event: Event, clicking: boolean, piece: GridCell) {
 			}
 		}
 	}
-
-
 }
 </script>
 

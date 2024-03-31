@@ -8,7 +8,6 @@ import BaseButton from "./components/common/BaseButton.vue";
 const app = createApp(App);
 app.use(router);
 
-
 app.component("RouterView", RouterView);
 app.component("BaseButton", BaseButton);
 app.mount("#app");

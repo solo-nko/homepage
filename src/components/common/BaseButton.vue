@@ -1,19 +1,20 @@
 <template>
-	<button><slot></slot></button>
+	<button>
+		<slot></slot>
+	</button>
 </template>
 
 <script setup lang="ts">
 defineProps({
 	fillColor: {
 		type: String,
-		default: "#cddbfe"
+		default: "#cddbfe",
 	},
 	borderColor: {
 		type: String,
-		default: "#c43f5e"
-	}
-})
-
+		default: "#c43f5e",
+	},
+});
 </script>
 
 <style scoped>
@@ -22,7 +23,9 @@ button {
 	border: 1.5px v-bind(borderColor) solid;
 	border-radius: 5px;
 	margin: 0 5px;
-	transition: box-shadow 150ms, transform 150ms;
+	transition:
+		box-shadow 150ms,
+		transform 150ms;
 }
 
 button:hover {

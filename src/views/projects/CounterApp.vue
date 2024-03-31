@@ -1,18 +1,26 @@
 <template>
 	<div id="grid-container">
-		<h1 class="grid-row theme-text">
-			Counter App
-		</h1>
+		<h1 class="grid-row theme-text">Counter App</h1>
 		<div id="counterResult" class="grid-row theme-text">{{ count }}</div>
 
-		<BaseButton id="incrButton" class="theme-text" v-on:click="increaseCount()">Increment</BaseButton>
-		<BaseButton id="decrButton" class="theme-text" v-on:click="decreaseCount()">Decrement</BaseButton>
-		<BaseButton id="resetButton" class="theme-text" v-on:click="resetCount()">Reset to 0</BaseButton>
+		<BaseButton id="incrButton" class="theme-text" v-on:click="increaseCount()"
+			>Increment</BaseButton
+		>
+		<BaseButton id="decrButton" class="theme-text" v-on:click="decreaseCount()"
+			>Decrement</BaseButton
+		>
+		<BaseButton id="resetButton" class="theme-text" v-on:click="resetCount()"
+			>Reset to 0</BaseButton
+		>
 
 		<div id="skipDiv" class="grid-row">
 			<label for="" class="theme-text">
 				Skip to
-				<input type="number" inputmode="numeric" v-on:change="setCount($event)">
+				<input
+					type="number"
+					inputmode="numeric"
+					v-on:change="setCount($event)"
+				/>
 			</label>
 		</div>
 	</div>
@@ -49,7 +57,7 @@ function setCount(event: Event) {
 
 <style scoped>
 .theme-text {
-	font-family: 'Noto Sans', sans-serif;
+	font-family: "Noto Sans", sans-serif;
 	/* color: var(--textColorDarkTheme); */
 }
 

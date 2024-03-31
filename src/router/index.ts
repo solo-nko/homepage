@@ -35,7 +35,7 @@ const router = createRouter({
 		{
 			path: "/projects/pixelsketch",
 			name: "pixelsketch",
-			component: PixelSketch
+			component: PixelSketch,
 		},
 		{
 			path: "/photos",
