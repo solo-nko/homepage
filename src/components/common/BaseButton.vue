@@ -1,20 +1,37 @@
 <template>
-	<button><slot></slot></button>
+	<button>
+		<slot></slot>
+	</button>
 </template>
+
+<script setup lang="ts">
+defineProps({
+	fillColor: {
+		type: String,
+		default: "#cddbfe",
+	},
+	borderColor: {
+		type: String,
+		default: "#c43f5e",
+	},
+});
+</script>
 
 <style scoped>
 button {
-	background-color: lightblue;
-	border: 1px blue solid;
+	background-color: v-bind(fillColor);
+	border: 1.5px v-bind(borderColor) solid;
 	border-radius: 5px;
 	margin: 0 5px;
-	transition: box-shadow 100ms, transform 100ms;
+	transition:
+		box-shadow 150ms,
+		transform 150ms;
 }
 
 button:hover {
 	cursor: pointer;
-	box-shadow: 2px 2px grey;
-	transform: translate(-2px, -2px);
+	box-shadow: 3px 3px #fb0000;
+	transform: translate(-3px, -3px);
 }
 
 button:active {

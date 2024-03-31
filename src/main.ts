@@ -3,12 +3,11 @@ import App from "./App.vue";
 import router from "./router/";
 
 import { RouterView } from "vue-router";
-import BaseButtonVue from "./components/common/BaseButton.vue";
+import BaseButton from "./components/common/BaseButton.vue";
 
 const app = createApp(App);
 app.use(router);
 
-
-app.component("router-view", RouterView);
-app.component("base-button", BaseButtonVue);
+app.component("RouterView", RouterView);
+app.component("BaseButton", BaseButton);
 app.mount("#app");

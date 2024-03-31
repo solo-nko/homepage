@@ -13,8 +13,8 @@ TypeScript cannot handle type information for `.vue` imports by default, so we r
 If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
 
 1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
+   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
+   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
 
 ## Customize configuration
@@ -41,15 +41,15 @@ npm run build
 
 ### Project Structure
 
-* assets - media and other static things like CSS sheets
-* components - Vue components
-  * common - small things meant to be reused multiple times
-  * singles - things that will only appear once
-* router - information for Vue Router
-* views - pages in the website
+- assets - media and other static things like CSS sheets
+- components - Vue components
+  - common - small things meant to be reused multiple times
+  - singles - things that will only appear once
+- router - information for Vue Router
+- views - pages in the website
 
 ### Tech Stack
 
-* Vue 3
-* Vue Router 4
-* TypeScript
+- Vue 3
+- Vue Router 4
+- TypeScript
