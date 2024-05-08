@@ -22,5 +22,6 @@ defineProps({
 	background-color: v-bind(fillColor);
 	border: 0.5px dashed gray;
 	box-sizing: border-box;
+	transition: background-color 100ms linear;
 }
 </style>
