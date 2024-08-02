@@ -26,7 +26,10 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" >
+@import "@/assets/main.scss";
+
+
 /* main {
 	display: flex;
 	flex-direction: column;
@@ -34,7 +37,7 @@ export default {
 } */
 
 body {
-	background-color: #d2e5ff;
+	background-color: map-get($themes, light, background);
 }
 
 td,
