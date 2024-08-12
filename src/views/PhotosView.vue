@@ -1,7 +1,7 @@
 <template>
-	<h1>Photo Gallery</h1>
-	<h2>My Gear</h2>
-	<table>
+	<h1 class="theme-text">Photo Gallery</h1>
+	<h2 class="theme-text">My Gear</h2>
+	<table class="theme-text">
 		<thead>
 			<tr>
 				<td>Type</td>
@@ -24,5 +24,5 @@
 			</tr>
 		</tbody>
 	</table>
-	<h2>Sample Photos</h2>
+	<h2 class="theme-text">Sample Photos</h2>
 </template>

@@ -1,29 +1,13 @@
-@use "sass:map";
-
-$themes: (
-        light: (
-                text: #140f00,
-                background: #d1edff,
-                primary: #6ba4ff,
-                secondary: #909bbb,
-                accent: #73c5fc,
-        ),
-        dark: (
-                text: #fffaeb,
-                background: #001c2e,
-                primary: #003994,
-                secondary: #444f6f,
-                accent: #03558c,
-        ),
-);
-
-
 * {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 body {
   margin: 0;
+}
+
+main {
+  padding: 0 1rem;
 }
 
 h1 {

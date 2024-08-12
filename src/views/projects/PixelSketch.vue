@@ -1,12 +1,12 @@
 <template>
 	<div id="top-container">
-		<section id="intro-sect">
+		<section id="intro-sect" class="theme-text">
 			<h1>Pixel Canvas</h1>
 			<p>
 				Click somewhere in the area below to start sketching your masterpiece!
 			</p>
 		</section>
-		<section id="option-sect">
+		<section id="option-sect" class="theme-text">
 			<div>
 				<label for="btn-piece-color">Draw Color</label>
 				<input v-model="foregroundColor" type="color" name="btn-piece-color" />
@@ -62,8 +62,8 @@
 
 import { computed, onBeforeMount, ref, watch } from "vue";
 import GridPiece from "@/components/common/GridPiece.vue";
-import type { GridCell } from "@/utils/GridCell";
-import PixelSketchConfig from "@/utils/Global";
+import type { GridCell } from "@/types/GridCell";
+import PixelSketchConfig from "@/store/PixelSketchConfig";
 import BaseButton from "@/components/common/BaseButton.vue";
 
 const gridDimension = ref(PixelSketchConfig.defaultDim);

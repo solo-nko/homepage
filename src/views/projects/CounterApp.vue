@@ -1,115 +1,115 @@
 <template>
-	<div id="grid-container">
-		<h1 class="grid-row theme-text">Counter App</h1>
-		<div id="counterResult" class="grid-row theme-text">{{ count }}</div>
+  <div id="grid-container">
+    <h1 class="grid-row theme-text">Counter App</h1>
+    <div id="counterResult" class="grid-row theme-text">{{ count }}</div>
 
-		<BaseButton id="incrButton" class="theme-text" v-on:click="increaseCount()"
-			>Increment</BaseButton
-		>
-		<BaseButton id="decrButton" class="theme-text" v-on:click="decreaseCount()"
-			>Decrement</BaseButton
-		>
-		<BaseButton id="resetButton" class="theme-text" v-on:click="resetCount()"
-			>Reset to 0</BaseButton
-		>
+    <BaseButton id="incrButton" class="theme-text" v-on:click="increaseCount()">Increment</BaseButton>
+    <BaseButton id="decrButton" class="theme-text" v-on:click="decreaseCount()">Decrement
+    </BaseButton>
+    <BaseButton id="resetButton" class="theme-text" v-on:click="resetCount()"
+    >Reset to 0
+    </BaseButton>
 
-		<div id="skipDiv" class="grid-row">
-			<label for="" class="theme-text">
-				Skip to
-				<input
-					type="number"
-					inputmode="numeric"
-					v-on:change="setCount($event)"
-				/>
-			</label>
-		</div>
-	</div>
+    <div id="skipDiv" class="grid-row">
+      <label for="" class="theme-text">
+        Skip to
+        <input
+            type="number"
+            inputmode="numeric"
+            v-on:change="setCount($event)"
+        />
+      </label>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import BaseButton from "@/components/common/BaseButton.vue";
 import { ref } from "vue";
 
-let count = ref(0);
+const count = ref(0);
+const delta = ref(1);
 
 function increaseCount(incrementAmount = 1): void {
-	count.value += incrementAmount;
+  count.value += incrementAmount;
 }
 
 function decreaseCount(decrementAmount = 1): void {
-	count.value -= decrementAmount;
+  count.value -= decrementAmount;
 }
 
 function resetCount() {
-	count.value = 0;
+  count.value = 0;
 }
 
 function setCount(event: Event) {
-	// see https://freshman.tech/snippets/typescript/fix-value-not-exist-eventtarget/
-	// for why the 'as' part is needed
-	const target = event.target as HTMLInputElement;
-	if (target != null) {
-		count.value = Number(target.value);
-		target.value = "";
-	}
+  // see https://freshman.tech/snippets/typescript/fix-value-not-exist-eventtarget/
+  // for why the 'as' part is needed
+  const target = event.target as HTMLInputElement;
+  if (target != null) {
+    count.value = Number(target.value);
+    target.value = "";
+  }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@use '@/assets/main';
+
 .theme-text {
-	font-family: "Noto Sans", sans-serif;
-	/* color: var(--textColorDarkTheme); */
+  font-family: "Noto Sans", sans-serif;
+  /* color: var(--textColorDarkTheme); */
 }
 
 #grid-container {
-	max-width: 800px;
-	margin: 0 auto;
-	display: grid;
-	grid-template-rows: 2fr 1fr 1fr 1fr;
-	grid-template-columns: 1fr 1fr 1fr;
-	grid-template-areas:
+  max-width: 800px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-rows: 2fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
 		"header header header"
 		"counter counter counter"
 		"button1 button2 button3"
 		"skip skip skip";
-	gap: 1rem;
-	padding: 0 1rem;
-	background-color: var(--backgroundColorDarkTheme);
+  gap: 1rem;
+  padding: 0 1rem;
+  background-color: var(--backgroundColorDarkTheme);
 }
 
 h1 {
-	grid-area: header;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 3rem;
+  grid-area: header;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
 }
 
 #counterResult {
-	grid-area: counter;
-	font-size: 3rem;
-	text-align: center;
+  grid-area: counter;
+  font-size: 3rem;
+  text-align: center;
 }
 
 button {
-	background-color: var(--buttonColorDarkTheme);
+  background-color: var(--buttonColorDarkTheme);
 }
 
 #incrButton {
-	grid-area: button1;
+  grid-area: button1;
 }
 
 #decrButton {
-	grid-area: button2;
+  grid-area: button2;
 }
 
 #resetButton {
-	grid-area: button3;
+  grid-area: button3;
 }
 
 #skipDiv {
-	grid-area: skip;
-	display: flex;
-	justify-content: center;
+  grid-area: skip;
+  display: flex;
+  justify-content: center;
 }
 </style>

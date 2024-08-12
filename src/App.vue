@@ -1,73 +1,44 @@
 <template>
-  <div id="app-container">
-    <Teleport to="body">
-      <header>
-        <TheNavigation />
-      </header>
-    </Teleport>
-    <Teleport to="body">
-      <main id="router-view">
-        <RouterView />
-      </main>
-    </Teleport>
-    <Teleport to="body">
-      <TheFooter />
-    </Teleport>
-  </div>
+	<div id="app-container">
+		<Teleport to="body">
+			<header>
+				<TheNavigation />
+			</header>
+		</Teleport>
+		<Teleport to="body">
+			<main id="router-view">
+				<RouterView />
+			</main>
+		</Teleport>
+		<Teleport to="body">
+			<TheFooter />
+		</Teleport>
+	</div>
 </template>
 
 <script setup lang="ts">
 import TheNavigation from "./components/singles/TheNavigation.vue";
 import TheFooter from "./components/singles/TheFooter.vue";
-import { computed, reactive, ref } from "vue";
-import type { Theme } from "@/utils/Theme";
+import { currentTheme } from "@/store/ThemeData";
+import { watchEffect } from "vue";
 
-let isDarkTheme = ref(false);
-const darkTheme: Theme = {
-  text: "#fffaeb",
-  background: "#001c2e",
-  primary: "#003994",
-  secondary: "#444f6f",
-  accent: "#03558c"
-};
-
-const lightTheme: Theme = {
-  text: "#140f00",
-  background: "#d1edff",
-  primary: "#6ba4ff",
-  secondary: "#909bbb",
-  accent: "#73c5fc"
-};
-
-const currentThemeComputed = computed(() => {
-  if (isDarkTheme.value) {
-    return darkTheme;
-  } else {
-    return lightTheme;
-  }
-});
-
-// need to dynamically access the theme object, not sure how
-const currentTheme = reactive({
-  background: computed(() => {
-    if (isDarkTheme.value) return darkTheme.background;
-    else return lightTheme.background;
-  })
-});
-
+// v-bind() in CSS doesn't work on ancestors of the component, so for the body element we use a different approach
+watchEffect(() =>
+		document.body.style.backgroundColor = currentTheme.background);
 
 </script>
 
 <style>
 
-
-body {
-  background-color: v-bind("currentTheme.background");
+.theme-text,
+a,
+a:visited {
+	color: v-bind("currentTheme.text");
 }
 
 td,
 table {
-  border: 1px gray solid;
-  border-collapse: collapse;
+	border: 3px v-bind("currentTheme.primary") solid;
+	border-collapse: collapse;
 }
 </style>
