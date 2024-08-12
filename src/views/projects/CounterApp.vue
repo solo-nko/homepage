@@ -11,7 +11,8 @@
 		</BaseButton>
 		<BaseButton id="decrButton" class="theme-text enlarged-text" v-on:click="decreaseCount(delta)">Decrement <br>( - )
 		</BaseButton>
-		<BaseButton id="resetButton" class="theme-text enlarged-text" v-on:click="resetCount()">Reset to 0 <br>( Z )</BaseButton>
+		<BaseButton id="resetButton" class="theme-text enlarged-text" v-on:click="resetCount()">Reset to 0 <br>( Z )
+		</BaseButton>
 
 		<div id="inputs-container" class="grid-row">
 			<label class="theme-text">Change by</label>
@@ -20,14 +21,29 @@
 			<input type="number" inputmode="numeric" v-on:change="setCount($event)" ref="setInput" />
 		</div>
 	</div>
+	<div id="history-container" class="theme-text">
+		<div id="history-header">
+			<h2>History</h2>
+			<BaseButton v-on:click="addToHistory">Add to History</BaseButton>
+		</div>
+		<ul>
+			<li v-for="(history, index) in historyList" v-bind:key="index">
+				Count: {{ history.count }}, Date: {{ history.date }}
+				<BaseButton v-on:click="removeFromHistory(index)">Delete</BaseButton>
+			</li>
+		</ul>
+	</div>
 </template>
 
 <script setup lang="ts">
 import BaseButton from "@/components/common/BaseButton.vue";
+import type { CountHistoryItem } from "@/types/CountHistoryItem";
+import { constructDateReadable } from "@/types/CountHistoryItem";
 import { onMounted, onUnmounted, ref } from "vue";
 
 const count = ref(0);
 const delta = ref(1);
+const historyList = ref<CountHistoryItem[]>([]);
 const deltaInput = ref<Element | null>(null);
 const setInput = ref<Element | null>(null);
 
@@ -41,16 +57,15 @@ onUnmounted(() => {
 
 // keyboard shortcuts
 function keyHandler(event: KeyboardEvent | undefined) {
-	console.log(document.activeElement);
-	console.log(deltaInput.value);
 	if (
 			event &&
+			/*	activeElement is a property that displays which element is in focus. Typically, that will either be the whole document,
+			or one of the input elements. so we see if one of the input elements is currently in focus */
 			document.activeElement != deltaInput.value &&
 			document.activeElement != setInput.value) {
 		if (event.key == "+") increaseCount(delta.value);
 		else if (event.key == "-") decreaseCount(delta.value);
 		else if (event.key == "z") resetCount();
-		console.log(event.key);
 	}
 }
 
@@ -62,7 +77,23 @@ function decreaseCount(decrementAmount = 1): void {
 	count.value -= decrementAmount;
 }
 
+function addToHistory() {
+	historyList.value.push(
+			{
+				id: historyList.value.length,
+				count: count.value,
+				date: constructDateReadable(new Date())
+			}
+	);
+}
+
+function removeFromHistory(historyId: number) {
+	historyList.value.splice(historyId, 1);
+}
+
 function resetCount() {
+
+	addToHistory();
 	// reset count
 	count.value = 0;
 	// reset "change by" value internally
@@ -97,6 +128,8 @@ function setCount(event: Event) {
 <style scoped lang="scss">
 @use "@/assets/main";
 
+$maxWidth: 70%;
+
 .theme-text {
 	font-family: "Noto Sans", sans-serif;
 }
@@ -105,9 +138,13 @@ function setCount(event: Event) {
 	font-size: 120%;
 }
 
-#grid-container {
-	max-width: 800px;
+#grid-container,
+#history-container {
+	max-width: $maxWidth;
 	margin: 0 auto;
+}
+
+#grid-container {
 	display: grid;
 	grid-template-rows: 2fr 1fr 1fr 1fr;
 	grid-template-columns: 1fr 1fr;
@@ -131,9 +168,11 @@ h1, #counterResult {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+
 	h1 {
 		margin-bottom: 0;
 	}
+
 	p {
 		margin-top: 0;
 	}
@@ -162,5 +201,17 @@ h1, #counterResult {
 	align-items: center;
 	grid-template-columns: 1fr 2fr;
 	grid-template-rows: 1fr 1fr;
+}
+
+#history-container {
+	margin-top: 2rem;
+}
+
+#history-header {
+	display: flex;
+
+	h2 {
+		margin: 0 1rem 0 0;
+	}
 }
 </style>
