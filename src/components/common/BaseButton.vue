@@ -24,10 +24,9 @@ button {
 	background-color: v-bind("currentTheme.primary");
 	border: 2px v-bind("currentTheme.accent") solid;
 	border-radius: 5px;
-	margin: 0 5px;
 	transition:
-		box-shadow 150ms,
-		transform 150ms;
+			box-shadow 150ms,
+			transform 150ms;
 }
 
 button:hover {

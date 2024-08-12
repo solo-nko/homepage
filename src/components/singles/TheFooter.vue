@@ -1,3 +1,4 @@
+<!--suppress ES6UnusedImports -->
 <template>
 	<footer>
 		<base-button v-on:click="flipTheme()">Toggle Theme</base-button>

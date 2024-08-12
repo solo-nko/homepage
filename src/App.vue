@@ -32,7 +32,7 @@ watchEffect(() =>
 
 .theme-text,
 a,
-a:visited {
+a:visited{
 	color: v-bind("currentTheme.text");
 }
 
