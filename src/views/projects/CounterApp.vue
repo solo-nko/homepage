@@ -50,10 +50,8 @@ const setInput = ref<Element | null>(null);
 onMounted(() => {
 	document.addEventListener("keyup", keyHandler);
 	// load history from browser storage, if it exists
-
-	// problem: this seems to break reload functionality on GH pages
-	//const parsedHistory = JSON.parse(localStorage.getItem("historyList") || "");
-	// if (parsedHistory) historyList.value = parsedHistory;
+	const parsedHistory = JSON.parse(localStorage.getItem("historyList") || "");
+	if (parsedHistory) historyList.value = parsedHistory;
 });
 
 onUnmounted(() => {
@@ -90,14 +88,12 @@ function addToHistory() {
 				date: constructDateReadable(new Date())
 			}
 	);
-	// localStorage.setItem("historyList", JSON.stringify(historyList.value));
-	// console.log(localStorage);
+	localStorage.setItem("historyList", JSON.stringify(historyList.value));
 }
 
 function removeFromHistory(historyId: number) {
 	historyList.value.splice(historyId, 1);
-	// localStorage.setItem("historyList", JSON.stringify(historyList.value));
-	// console.log(localStorage);
+	localStorage.setItem("historyList", JSON.stringify(historyList.value));
 }
 
 function resetCount() {
