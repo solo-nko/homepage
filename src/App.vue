@@ -1,7 +1,9 @@
 <template>
 	<div id="app-container">
 		<Teleport to="body">
-			<header><TheNavigation /></header>
+			<header>
+				<TheNavigation />
+			</header>
 		</Teleport>
 		<Teleport to="body">
 			<main id="router-view">
@@ -14,32 +16,29 @@
 	</div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import TheNavigation from "./components/singles/TheNavigation.vue";
 import TheFooter from "./components/singles/TheFooter.vue";
+import { currentTheme } from "@/store/ThemeData";
+import { watchEffect } from "vue";
 
-export default {
-	components: {
-		TheNavigation,
-		TheFooter,
-	},
-};
+// v-bind() in CSS doesn't work on ancestors of the component, so for the body element we use a different approach
+watchEffect(() =>
+		document.body.style.backgroundColor = currentTheme.background);
+
 </script>
 
 <style>
-/* main {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-} */
 
-body {
-	background-color: #d2e5ff;
+.theme-text,
+a,
+a:visited{
+	color: v-bind("currentTheme.text");
 }
 
 td,
 table {
-	border: 1px gray solid;
+	border: 3px v-bind("currentTheme.primary") solid;
 	border-collapse: collapse;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
-	<h1>Projects</h1>
-	<p>Here I keep links to notable projects I've made or am working on.</p>
-	<table>
+	<h1 class="theme-text">Projects</h1>
+	<p class="theme-text">Here I keep links to notable projects I've made or am working on.</p>
+	<table class="theme-text">
 		<thead>
 			<tr>
 				<td>Project</td>

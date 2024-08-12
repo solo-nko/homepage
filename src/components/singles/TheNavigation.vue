@@ -1,15 +1,15 @@
 <template>
 	<nav>
-		<RouterLink v-bind:to="{ name: 'home' }">
+		<RouterLink class="nav-link" v-bind:to="{ name: 'home' }">
 			<BaseButton>Home</BaseButton>
 		</RouterLink>
-		<RouterLink v-bind:to="{ name: 'about' }">
+		<RouterLink class="nav-link" v-bind:to="{ name: 'about' }">
 			<BaseButton>About Me</BaseButton>
 		</RouterLink>
-		<RouterLink v-bind:to="{ name: 'projects' }">
+		<RouterLink class="nav-link" v-bind:to="{ name: 'projects' }">
 			<BaseButton>Projects</BaseButton>
 		</RouterLink>
-		<RouterLink v-bind:to="{ name: 'photos' }">
+		<RouterLink class="nav-link" v-bind:to="{ name: 'photos' }">
 			<BaseButton>Photography</BaseButton>
 		</RouterLink>
 	</nav>
@@ -19,10 +19,17 @@
 export default {};
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 nav {
 	padding: 1rem;
 	display: flex;
 	justify-content: center;
+}
+
+.nav-link {
+	margin: 0 1rem;
+	:first-child {
+		font-size: 120%;
+	}
 }
 </style>
