@@ -20,7 +20,8 @@ defineProps({
 	width: 100%;
 	height: 100%;
 	background-color: v-bind(fillColor);
-	border: 0.5px dashed gray;
+	border: 1px dashed gray;
 	box-sizing: border-box;
+	transition: background-color 100ms linear;
 }
 </style>
