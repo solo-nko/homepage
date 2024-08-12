@@ -1,3 +1,5 @@
+// noinspection SpellCheckingInspection
+
 import { createRouter, createWebHistory } from "vue-router";
 
 //see tsconfig.app.json to see how the @ mark is defined
@@ -8,7 +10,7 @@ import CounterApp from "@/views/projects/CounterApp.vue";
 import PixelSketch from "@/views/projects/PixelSketch.vue";
 import AboutView from "@/views/AboutView.vue";
 
-const router = createRouter({
+export const router = createRouter({
 	history: createWebHistory(),
 	routes: [
 		{ path: "/", redirect: "/home" },
@@ -49,5 +51,3 @@ const router = createRouter({
 		},
 	],
 });
-
-export default router;

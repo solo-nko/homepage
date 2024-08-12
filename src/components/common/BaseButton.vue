@@ -5,6 +5,7 @@
 </template>
 
 <script setup lang="ts">
+import { currentTheme } from "@/store/ThemeData";
 defineProps({
 	fillColor: {
 		type: String,
@@ -19,18 +20,18 @@ defineProps({
 
 <style scoped>
 button {
-	background-color: v-bind(fillColor);
-	border: 1.5px v-bind(borderColor) solid;
+	color: v-bind("currentTheme.text");
+	background-color: v-bind("currentTheme.primary");
+	border: 2px v-bind("currentTheme.accent") solid;
 	border-radius: 5px;
-	margin: 0 5px;
 	transition:
-		box-shadow 150ms,
-		transform 150ms;
+			box-shadow 150ms,
+			transform 150ms;
 }
 
 button:hover {
 	cursor: pointer;
-	box-shadow: 3px 3px #fb0000;
+	box-shadow: 3px 3px v-bind("currentTheme.accent");
 	transform: translate(-3px, -3px);
 }
 

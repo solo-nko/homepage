@@ -1,13 +1,13 @@
 import { createApp } from "vue";
-import App from "./App.vue";
-import router from "./router/";
+import App from "@/App.vue";
+import { router } from "@/router";
 
-import { RouterView } from "vue-router";
-import BaseButton from "./components/common/BaseButton.vue";
+import BaseButton from "@/components/common/BaseButton.vue";
 
 const app = createApp(App);
+
+// the use() method globally registers RouterView and RouterLink components, so there's no need to register them separately
 app.use(router);
 
-app.component("RouterView", RouterView);
 app.component("BaseButton", BaseButton);
 app.mount("#app");
