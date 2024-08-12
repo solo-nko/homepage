@@ -28,7 +28,6 @@ import BaseButton from "@/components/common/BaseButton.vue";
 import { ref } from "vue";
 
 const count = ref(0);
-const delta = ref(1);
 
 function increaseCount(incrementAmount = 1): void {
   count.value += incrementAmount;
@@ -46,7 +45,7 @@ function setCount(event: Event) {
   // see https://freshman.tech/snippets/typescript/fix-value-not-exist-eventtarget/
   // for why the 'as' part is needed
   const target = event.target as HTMLInputElement;
-  if (target != null) {
+  if (target) {
     count.value = Number(target.value);
     target.value = "";
   }

@@ -22,7 +22,7 @@ defineProps({
 button {
 	color: v-bind("currentTheme.text");
 	background-color: v-bind("currentTheme.primary");
-	border: 1.5px v-bind("currentTheme.accent") solid;
+	border: 2px v-bind("currentTheme.accent") solid;
 	border-radius: 5px;
 	margin: 0 5px;
 	transition:

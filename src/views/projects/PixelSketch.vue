@@ -74,10 +74,10 @@ const backgroundColor = ref(PixelSketchConfig.defaultBackground);
 const eraserButtonFillColor = ref("#cddbfe");
 let eraserActive: boolean = false;
 
-//when number of gridpieces changes, create a new grid
+//when number of grid pieces changes, create a new grid
 watch(numOfPieces, () => createNewGrid());
 
-// this makes is to the background color actively changes as you mess around with the slider. that's not a bad thing, but i preferred to have the color apply when the color box is closed
+// this makes it so the background color actively changes as you mess around with the slider. that's not a bad thing, but I preferred to have the color apply when the color box is closed
 // watch(backgroundColor, () => createNewGrid(true));
 
 onBeforeMount(() => createNewGrid());
@@ -127,6 +127,7 @@ function resetToDefault() {
  * Handles click event on grid pieces.
  * @param event the event fired by clicking
  * @param clicking whether the mouse button is being clicked once or held down
+ * @param piece the piece to be filled/colored
  */
 function fillPiece(event: Event, clicking: boolean, piece: GridCell) {
 	//eraser
@@ -182,7 +183,6 @@ function fillPiece(event: Event, clicking: boolean, piece: GridCell) {
 	gap: 1rem;
 	grid-template-columns: 1fr 3fr;
 	grid-template-rows: 1fr 3fr;
-	max-width: 800px;
 }
 
 #intro-sect {
@@ -215,7 +215,6 @@ function fillPiece(event: Event, clicking: boolean, piece: GridCell) {
 
 #sketch-area {
 	display: grid;
-	height: 100%;
 	height: 100%;
 }
 
